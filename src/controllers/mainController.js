@@ -16,13 +16,14 @@ const controller = {
 		const busqueda = req.body.keywords;
 		const result = [];
 		products.forEach( producto => {
-			if (producto.name.toLowerCase().includes(busqueda.toLowerCase())){
-				resultado.push(producto)
+			if (producto.name.includes(busqueda)){
+				result.push(producto)
 			}
 			
 		});
 		res.render("results", {result,busqueda})
 	},
 };
+
 
 module.exports = controller;
