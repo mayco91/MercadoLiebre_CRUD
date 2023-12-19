@@ -36,7 +36,7 @@ const controller = {
 	// Create -  Method to store
 	store: (req, res) => {
 		const product = req.body;
-		
+		const products = getJson()
 		products.push(product);
 		product.id = Date.now();
 		const json = JSON.stringify(products);
@@ -79,8 +79,8 @@ const controller = {
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
 		const id = req.params.id;
-		const leerjson = products;
-		const producto = leerjson.filter( producto => producto.id != id );
+		const products = getJson()
+		const producto = products.filter( producto => producto.id != id );
 		const json = JSON.stringify(producto);
     	fs.writeFileSync(productsFilePath,json,"utf-8");
 		res.redirect("/products")
