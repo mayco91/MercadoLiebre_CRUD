@@ -13,15 +13,15 @@ const controller = {
 		res.render("index",{visited,inSale,toThousand})
 	},
 	search: (req, res) => {
-		const busqueda = req.body.keywords;
+		const busqueda = req.query.keywords;
 		const result = [];
 		products.forEach( producto => {
-			if (producto.name.includes(busqueda)){
+			if (producto.name.toLowerCase().includes(busqueda.toLowerCase())){
 				result.push(producto)
 			}
 			
 		});
-		res.render("results", {result,busqueda})
+		res.render("results", {result,busqueda,toThousand})
 	},
 };
 
