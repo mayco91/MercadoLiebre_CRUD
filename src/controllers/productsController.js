@@ -35,10 +35,20 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		const product = req.body;
+		const file = req.file
+		const id = Date.now();
+		const{name,price,discount,category,description} = req.body;
 		const products = getJson()
+		const product = { 
+		id,
+		name:name.trim(),
+		price:+price,
+		discount,
+		category,
+		description:description.trim(),
+		image: file ? file.filename : "default.jpg"
+	}
 		products.push(product);
-		product.id = Date.now();
 		const json = JSON.stringify(products);
 		fs.writeFileSync(productsFilePath,json,"utf-8")
 		res.redirect("/products")
@@ -54,8 +64,9 @@ const controller = {
 	},
 	// Update - Method to update
 	update: (req, res) => {
+		const file = req.file
 		const id = req.params.id;
-		const{name,price,discount,category,description,image} = req.body;
+		const{name,price,discount,category,description} = req.body;
 		const products = getJson()
 		const nuevoArrary = products.map(producto =>{
 		if(producto.id == id){
@@ -66,7 +77,7 @@ const controller = {
 				discount,
 				category,
 				description:description.trim(),
-				image: image ? image : producto.image
+				image: file ? file.filename : producto.image
 			}
 		}
 		return producto
@@ -79,9 +90,14 @@ const controller = {
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
 		const id = req.params.id;
-		const products = getJson()
+		const products = getJson();
+		const product = products.find(producto =>producto.id == id);
 		const producto = products.filter( producto => producto.id != id );
 		const json = JSON.stringify(producto);
+		fs.unlink(`./public/images/products/${product.image}`,(err) =>{
+			if (err) throw err;
+			console.log(`borre el archivo ${product.image}`)
+		})
     	fs.writeFileSync(productsFilePath,json,"utf-8");
 		res.redirect("/products")
 	}

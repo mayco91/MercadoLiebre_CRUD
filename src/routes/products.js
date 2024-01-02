@@ -4,20 +4,20 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 
-
-
-// ************ Controller Require ************
-const productsController = require('../controllers/productsController');
 const storage = multer.diskStorage({
     destination: (req,file,cb) => {
-        cb(null,("./public/images/products"));
+        cb(null,path.join(__dirname, "../../public/images/products"));
     },
     filename: (req,file,cb) =>{
-        const newFileName = "img-"+ Date.now() + path.extname(file.originalname);
+        const newFileName = Date.now() + "_img_" + path.extname(file.originalname);
         cb(null,newFileName)
     }
 });
 const upload = multer({storage});
+
+// ************ Controller Require ************
+const productsController = require('../controllers/productsController');
+
 /*** GET ALL PRODUCTS ***/ 
 router.get('/', productsController.index); 
 
@@ -31,7 +31,7 @@ router.get('/detail/:id', productsController.detail);
 
 /*** EDIT ONE PRODUCT ***/ 
 router.get('/edit/:id', productsController.edit); 
-router.put('/edit/:id', productsController.update); 
+router.put('/edit/:id', upload.single("image"), productsController.update); 
 
 
 /*** DELETE ONE PRODUCT***/ 
