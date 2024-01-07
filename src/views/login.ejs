@@ -12,29 +12,18 @@
           <% } %>
       </div>
       <div class="registro">
-        <label class="registro_campo" for="lastName">Apellido:</label><br>
-        <input type="text" name="lastName" id="lastName" value="<%= locals.old && old.lastName %>" >
-        <% if (locals.errors && errors.lastName) { %>
-          <p class="feedback">*<%= errors.lastName.msg %></p>
-          <% } %>
-      </div>
-      <div class="registro">
-        <label class="registro_campo" for="email">Correo electrónico:</label><br>
-        <input type="email" name="email" id="email" value="<%= locals.old && old.email %>" >
-        <% if (locals.errors && errors.email) { %>
-          <p class="feedback">*<%= errors.email.msg %></p>
-          <% } %>
-      </div>
-      <div class="registro">
         <label class="registro_campo" for="password">Contraseña:</label><br>
         <input type="password" name="password" id="password" value="<%= locals.old && old.passwordname %>" >
         <% if (locals.errors && errors.password) { %>
           <p class="feedback">*<%= errors.password.msg %></p>
           <% } %>
-      </div> 
-        <div class="registro">
-          <button class="boton_registro" type="submit">Registrarse</button>
-        </div>
-        </form>
-  </body>
+      </div>
+      <div class="registro">
+        <button class="boton_registro" type="submit">Sing In</button>
+      </div>
+      <div class="registro">
+        <a href="/users/register"><button class="boton_registro login">Sing up</button></a>
+      </div>
+      </form>
+</body>
 </html>

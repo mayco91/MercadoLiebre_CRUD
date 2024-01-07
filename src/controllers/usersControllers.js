@@ -32,7 +32,13 @@ module.exports = {
     } else {
         res.render('register', { errors: errors.mapped(), old: req.body });
     }
-        
+        },
 
-	},
+    login: (req,res,next) =>{
+        res.render("login")
+    },
+
+    logeo: (req,res,next) =>{
+        
+    }
 }
